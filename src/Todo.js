@@ -11,8 +11,17 @@ export default function Todo(){
 
     return(
         <div>
+            <ul>
             <p>{todo.map(todos=>
-                (<div key={todos.id}>{todos.title}</div>))}</p>
+                (<li key={todos.id}>
+                   <li>"userId :"{todos.userId}</li> 
+                   <li>"id :"{todos.id}</li>
+                   <li>"title :"{todos.title}</li>
+                   <li>"completed :"{todos.completed}</li>
+                </li>
+                ))}
+            </p>
+            </ul>
         </div>
     )
 }

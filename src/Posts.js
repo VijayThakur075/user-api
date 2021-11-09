@@ -16,7 +16,11 @@ return(
               <ul>
                   <h3>Posts</h3>
                     <div>{num.map(posts => (
-                      <li key={posts.id}>{posts.userId}</li>
+                      <li key={posts.id}>
+                         <li> "userId :"{posts.userId}</li>
+                         <li> "title :"{posts.title}</li>
+                         <li> "body :"{posts.body}</li>
+                      </li>
                   ))}</div>
               </ul>
           </div>
