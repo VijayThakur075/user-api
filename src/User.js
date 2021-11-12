@@ -2,27 +2,29 @@ import axios from "axios";
 import React ,{ useState, useEffect } from "react";
 import Button from "@restart/ui/esm/Button";
 import { useNavigate } from "react-router";
+import { Link, Route} from "react-router-dom";
+
+const NestedRoute = (props) => console.log(props) || <p>{props.match.params.id}</p>;
 
 
-
-export default function User (){
+export default function User (props){
     const[post, setPost] = useState([]);
     let navigate = useNavigate();
-
-
+   
     useEffect(() =>{
         axios.get("http://localhost:3008/users")
         .then((response) => {
          setPost(response.data);
         });     
     });
+    
 
-     function Todo(event) {
+    function Todo(event) {
         navigate(`/users/${event}/todos`);
     }
 
     function Posts(event) {
-        navigate(`/users/${event}/todos`)
+        navigate(`/users/${event}/posts`)
     }
 
 
@@ -32,8 +34,7 @@ export default function User (){
         setPost(nextUser);
     }
 
-    if(!post)
-    return null;
+    if(!post)return null;
 
     return(
         <>
@@ -54,7 +55,12 @@ export default function User (){
                            name="name">edit</Button>
                       </li>
                   ))}
+                   <li>
+                       <Link to="/nested-router/">Contacts 1 </Link>
+                   </li>
               </ul>
+                      <Route path="/nested-router/:users/1/todos" component={NestedRoute} />
+
           </div>
         </>
     )
