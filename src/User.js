@@ -27,7 +27,7 @@ export default function User (props){
                           <li>{post.name}</li>
                           <li>{post.username}</li>
                           <li>{post.email}</li>
-                          <Link className = "btn btn-primary" to={`/Post/${post.id}`}>post </Link>
+                          <Link className = "btn btn-primary" to={`/Posts/${post.id}`}>post </Link>
                           <Link className = "btn btn-primary" to={`/Todo/${post.id}`} >todo</Link>
                           <Link className = "btn btn-primary" to={`/EditUser/${post.id}`}>edit</Link>
                          

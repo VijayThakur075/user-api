@@ -1,10 +1,10 @@
-import React, { useEffect} from "react";
+import React, { useState,useEffect} from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
  const Post =()=>{
-    const[Num , setNum]= React.useState([]);
+    const[Num , setNum]= useState([]);
     const {id} =useParams();
 
       useEffect(()=>{
@@ -13,8 +13,10 @@ import { Link } from "react-router-dom";
 
 
     const loadUser= async () =>{
-        const res = await axios.get(`http://localhost:3008/users/${id}/posts`);
-        setNum(res.data)
+        await axios.get(`http://localhost:3008/users/${id}/posts`).then((response)=>{
+            setNum(response.data)
+        });
+        
     }
 return(
 
@@ -23,12 +25,12 @@ return(
            <div>
               <ul>
                   <h3 className="text-danger">User id</h3>
-                   {Num.map(post => (
+                   {Num.map((post => (
                       <li key={post.id}>
                          <li> "userId :"{post.userId}</li>
                          
                       </li>
-                  ))}
+                  )))}
               </ul>
               </div>
               <div>
