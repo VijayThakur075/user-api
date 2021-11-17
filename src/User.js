@@ -1,66 +1,39 @@
 import axios from "axios";
 import React ,{ useState, useEffect } from "react";
-import Button from "@restart/ui/esm/Button";
-import { useNavigate } from "react-router";
-import { Link, Route} from "react-router-dom";
-
-const NestedRoute = (props) => console.log(props) || <p>{props.match.params.id}</p>;
-
+import { Link } from "react-router-dom";
 
 export default function User (props){
-    const[post, setPost] = useState([]);
-    let navigate = useNavigate();
+    const[Post, setPost] = useState([]);
+    
    
     useEffect(() =>{
         axios.get("http://localhost:3008/users")
         .then((response) => {
          setPost(response.data);
+         setPost(response.data.reverse())
         });     
-    });
-    
+    }, []);
 
-    function Todo(event) {
-        navigate(`/users/${event}/todos`);
-    }
-
-    function Posts(event) {
-        navigate(`/users/${event}/posts`)
-    }
-
-
-    function handleChangeName(event) {
-        const { name, value } = event.target;
-        const nextUser = { ...post, [name]: value };
-        setPost(nextUser);
-    }
-
-    if(!post)return null;
+    if(!Post)return null;
 
     return(
         <>
           <div>
               <ul>
                   <h3>ID</h3>
-                  {post.map(data => (
-                      <li key={data.id}>
-                          <li>{data.id}</li>
-                          <li>{data.name}</li>
-                          <li>{data.username}</li>
-                          <li>{data.email}</li>
-                          <Button variant="primary"  onClick={() =>Todo(data.id)}>todo </Button>
-                          <Button variant="primary" onClick={() =>Posts(data.id)} >post</Button>
-                          <Button variant="primary"
-                           value={post.name}
-                           onChange={handleChangeName}
-                           name="name">edit</Button>
+                  {Post.map(post => (
+                      <li key={post.id}>
+                          <li>{post.id}</li>
+                          <li>{post.name}</li>
+                          <li>{post.username}</li>
+                          <li>{post.email}</li>
+                          <Link className = "btn btn-primary" to={`/Post/${post.id}`}>post </Link>
+                          <Link className = "btn btn-primary" to={`/Todo/${post.id}`} >todo</Link>
+                          <Link className = "btn btn-primary" to={`/EditUser/${post.id}`}>edit</Link>
+                         
                       </li>
                   ))}
-                   <li>
-                       <Link to="/nested-router/">Contacts 1 </Link>
-                   </li>
-              </ul>
-                      <Route path="/nested-router/:users/1/todos" component={NestedRoute} />
-
+                </ul>
           </div>
         </>
     )
