@@ -1,29 +1,34 @@
 import React,{useEffect, useState}from "react";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
+import { getEdit } from "./action";
+import { useSelector,useDispatch } from "react-redux";
 
 const EditUser =() =>{
     const navigate= useNavigate();
     const {id} = useParams();
-    const [user, setUser] =useState({
+   /* const [user, setUser] =useState({
         userId:"",
         username:"",
         email:""
-    });
-    const{ userId, username, email} = user;
+    });*/
+    const editData = useSelector((state) => state.edit.editUser);
+    const dispatch = useDispatch();
+
+    const{ userId, username, email} = editData;
         const handle = e => {
-            setUser({...user,[e.target.name]: e.target.value});
+            dispatch(getEdit({...editData,[e.target.name]: e.target.value}));
         };
 
         const Submit= async(e) =>{
             e.preventDefault();
-            await axios.put(`http://localhost:3008/users/${id}` , user)
+            await axios.put(`http://localhost:3008/users/${id}`, editData)
             navigate('/User');
         };
 
         useEffect(() =>{
             axios.get(`http://localhost:3008/users/${id}`).then((response) => {
-                setUser(response.data);
+               dispatch(getEdit(response.data));
             });
         }, []);
 

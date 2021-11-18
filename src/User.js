@@ -1,27 +1,30 @@
 import axios from "axios";
-import React ,{ useState, useEffect } from "react";
+import React ,{ useEffect } from "react";
 import { Link } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getUser} from "./action/index.js";
 
 export default function User (props){
-    const[Post, setPost] = useState([]);
-    
+    //const[Post, setPost] = useState([]);
+    const users = useSelector((state) => state.users.user);
+    const dispatch = useDispatch();
    
     useEffect(() =>{
         axios.get("http://localhost:3008/users")
         .then((response) => {
-         setPost(response.data);
-         setPost(response.data.reverse())
+         dispatch(getUser(response.data));
+         
         });     
     }, []);
 
-    if(!Post)return null;
+    if(!users)return null;
 
     return(
         <>
           <div>
               <ul>
                   <h3>ID</h3>
-                  {Post.map(post => (
+                  {users.map(post => (
                       <li key={post.id}>
                           <li>{post.id}</li>
                           <li>{post.name}</li>

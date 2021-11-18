@@ -1,11 +1,16 @@
-import React, { useState,useEffect} from "react";
+import React, {useEffect} from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
+import { getPost } from "./action/index.js";
 
  const Post =()=>{
-    const[Num , setNum]= useState([]);
+    //const[Num , setNum]= useState([]);
     const {id} =useParams();
+    const posts = useSelector((state) => state.posts.post);
+    const dispatch = useDispatch();
+
 
       useEffect(()=>{
         loadUser();
@@ -14,7 +19,7 @@ import { Link } from "react-router-dom";
 
     const loadUser= async () =>{
         await axios.get(`http://localhost:3008/users/${id}/posts`).then((response)=>{
-            setNum(response.data)
+           dispatch(getPost(response.data))
         });
         
     }
@@ -25,7 +30,7 @@ return(
            <div>
               <ul>
                   <h3 className="text-danger">User id</h3>
-                   {Num.map((post => (
+                   {posts.map((post => (
                       <li key={post.id}>
                          <li> "userId :"{post.userId}</li>
                          
@@ -36,7 +41,7 @@ return(
               <div>
                   <ul>
                       <h5 className="text-danger">title</h5>
-                      {Num.map(post =>(
+                      {posts.map(post =>(
                          <li key={post.id}>{post.title} <Link className="btn btn-primary"  to={`/Comment/${post.id}`}>UserComment</Link></li> 
                        ))}
                   </ul>
