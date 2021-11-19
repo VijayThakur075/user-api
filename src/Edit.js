@@ -1,10 +1,11 @@
-import React,{useEffect, useState}from "react";
+import React,{useEffect}from "react";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
-import { getEdit } from "./action";
+import { getEdit, getModel } from "./action";
 import { useSelector,useDispatch } from "react-redux";
-
-const EditUser =() =>{
+import Button from "@restart/ui/esm/Button";
+import { Modal } from "bootstrap"; 
+const EditUser =(props) =>{
     const navigate= useNavigate();
     const {id} = useParams();
    /* const [user, setUser] =useState({
@@ -14,7 +15,9 @@ const EditUser =() =>{
     });*/
     const editData = useSelector((state) => state.edit.editUser);
     const dispatch = useDispatch();
+    const edituser = useSelector((state) => state.edit.show);
 
+    
     const{ userId, username, email} = editData;
         const handle = e => {
             dispatch(getEdit({...editData,[e.target.name]: e.target.value}));
@@ -32,7 +35,20 @@ const EditUser =() =>{
             });
         }, []);
 
+        const handleClose = () => dispatch(getModel(false));
+        const handleShow = () => dispatch(getModel(true));
+
         return(
+            <>
+             <Button variant="primary" onClick={handleShow}>
+                 Launch demo modal
+             </Button>
+
+            <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
             <div className="wrapper">
                 <form onSubmit={(e) =>Submit(e)}>
                 <div className="form-group">
@@ -53,6 +69,17 @@ const EditUser =() =>{
 
             </form>
             </div>
+            </Modal.Body>
+            <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
         )
 }
 export default EditUser;
