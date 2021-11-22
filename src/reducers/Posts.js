@@ -1,7 +1,7 @@
 import {GET_POST} from "../action";
 
 const intialState={
-    post:[]
+    post:[],
 }
 
 const posts=(state =intialState,action)=>{

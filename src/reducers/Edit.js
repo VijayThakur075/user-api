@@ -6,7 +6,7 @@ const intialState={
         username:"",
         email:"",
     },
-    show: 'false',
+    //show: 'false',
 }
 
 const edit=(state =intialState,action)=>{

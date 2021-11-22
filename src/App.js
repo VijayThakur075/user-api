@@ -27,6 +27,7 @@ const App=()=> {
 
       </nav>
       <Routes>
+         
          <Route exact path="/User" element={<User/>}/>
          <Route path="/Todo/:id" element={<Todo/>}/>
          <Route path="/Posts/:id" element={<Posts/>}/>

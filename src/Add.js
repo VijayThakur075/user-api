@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
 import { getAdd } from "./action";
+import { requestUser } from "./Thunks/add";
 
 const Add =(props) =>{
     const navigate = useNavigate();
@@ -23,8 +24,8 @@ const handle = e =>{
 
 const onSubmit = async(e)=>{
     e.preventDefault();
-   const res= await axios.post(`http://localhost:3008/users`,addData)
-     dispatch(getAdd(res.data))
+    //const res= await axios.post(`http://localhost:3008/users`,addData)
+    dispatch(requestUser())
     navigate('/User');
 
 };

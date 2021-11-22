@@ -1,8 +1,10 @@
 import React, {useEffect} from "react";
-import axios from "axios";
 import { useParams } from "react-router";
 import {useSelector, useDispatch} from "react-redux"
-import {getTodo} from "./action";
+import { requestUser } from "./Thunks/todo";
+//import {getTodo} from "./action";
+//import axios from "axios";
+
 
  const Todo=()=>{
     const {id} =useParams();
@@ -11,14 +13,15 @@ import {getTodo} from "./action";
     const dispatch = useDispatch();
 
     useEffect(()=>{
-      loadUser();
+     // loadUser();
+        dispatch(requestUser(id))
         },[]);
 
-    const loadUser = async ()=>{
-        const res = await axios.get(`http://localhost:3008/users/${id}/todos` );
-        console.log(res);
-        dispatch(getTodo(res.data))
-    }
+    // const loadUser = async ()=>{
+    //     const res = await axios.get(`http://localhost:3008/users/${id}/todos` );
+    //     console.log(res);
+    //     dispatch(getTodo(res.data))
+    // }
     
 
     return(
